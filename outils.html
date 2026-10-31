@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Cross Training">
+<meta name="theme-color" content="#c2410c">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cycle cross training · outils</title>
+<link rel="stylesheet" href="eps-design.css">
+<link rel="stylesheet" href="eps-outil.css">
+<style>
+:root{--bg:#f3f5f8;--surface:#fff;--ink:#1c2128;--fg:#1c2128;--muted:#5b6470;--line:#dde2e8;--chip:#eef1f5;--accent:#c2410c;--accent-soft:#fbeee6;--accent-fg:#fff;--warn:#c2410c;--ok:#15803d;--pD:#0e7490}
+:root[data-theme="dark"]{--bg:#0d1117;--surface:#161b22;--ink:#e6edf3;--fg:#e6edf3;--muted:#8b949e;--line:#2a313b;--chip:#21262d;--accent:#f0a27e;--accent-soft:#3a2014;--accent-fg:#0d1117;--warn:#fb923c;--ok:#4ade80;--pD:#67c6dd}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Atkinson","Segoe UI",Roboto,Arial,sans-serif}
+header.top{max-width:1100px;margin:0 auto;padding:14px 16px 0}
+.toprow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+header.top h1{margin:0;font:800 22px/1.15 "Archivo","Arial Narrow",Arial,sans-serif;display:flex;align-items:center}
+header.top p{margin:6px 0 0;color:var(--muted);font-size:max(14px,var(--fs-min,15px))}
+.appicon{width:40px;height:40px;border-radius:9px;margin:0 10px 0 0;box-shadow:0 1px 3px rgba(0,0,0,.25);flex:none}
+.cbtn{display:inline-flex;align-items:center;min-height:44px;border:1.5px solid var(--line);background:var(--surface);color:var(--accent);border-radius:10px;padding:6px 14px;font-weight:700;text-decoration:none;font-size:15px}
+nav#nav{max-width:1100px;margin:12px auto 0;padding:0 16px 12px;display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid var(--line)}
+nav#nav button{border:1.5px solid var(--line);background:var(--surface);color:var(--fg);border-radius:10px;padding:8px 12px;font:600 15px "Atkinson",Arial,sans-serif;min-height:44px;cursor:pointer}
+nav#nav button.on{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+@media (max-width:700px){nav#nav{flex-wrap:nowrap;overflow-x:auto}nav#nav button{flex:none}}
+main{max-width:1100px;margin:0 auto;padding:16px}
+h2{font:800 clamp(26px,3.6vw,34px)/1.08 "Archivo","Arial Narrow",Arial,sans-serif;margin:8px 0 10px;text-wrap:balance}
+h3{font:800 21px/1.15 "Archivo","Arial Narrow",Arial,sans-serif;margin:22px 0 8px}
+h4{margin:0}
+a{color:var(--accent)}
+.small{font-size:max(14px,var(--fs-min,15px))}.muted{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:6px;min-height:44px;border:1.5px solid var(--accent);background:var(--accent);color:var(--accent-fg);padding:8px 14px;border-radius:10px;font:700 15px "Atkinson",Arial,sans-serif;cursor:pointer;text-decoration:none}
+.btn.ghost{background:var(--surface);border-color:var(--line);color:var(--fg)}
+.btn.mini{min-height:36px;padding:4px 10px;font-size:14px}
+.btn:disabled{opacity:.45;cursor:default}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.pill{display:inline-block;background:var(--chip);border-radius:999px;padding:3px 10px;font-size:max(13px,var(--fs-min,15px));margin:0 4px 4px 0}
+.st-faite{background:#dcfce7;color:#14532d}.st-jour{background:#fef3c7;color:#78350f}.st-eval{background:#fee2e2;color:#7f1d1d}
+.sgrid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
+@media (max-width:760px){.sgrid{grid-template-columns:repeat(4,1fr)}}
+.sbtn{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:8px;min-height:56px;text-align:left;cursor:pointer;font:inherit;min-width:0}
+.sbtn b{display:block;font:800 22px/1 "Archivo",Arial,sans-serif}
+.sbtn small{display:block;font-size:max(13px,var(--fs-min,15px));color:var(--muted);line-height:1.2;hyphens:auto}
+.sbtn.on{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}.sbtn.on small{color:var(--accent-fg);opacity:.85}
+.sbtn.st-faite b::after{content:" ✓";color:var(--ok)}.sbtn.st-jour b::after{content:" ●";color:var(--warn)}
+.seance{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:10px}
+.obj{font-size:17px}
+.tl{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px}
+.tlb{min-width:104px;border:0;border-radius:10px;padding:8px 12px;color:#fff;font:inherit;font-size:max(14px,var(--fs-min,15px));line-height:1.25;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;text-align:left}
+.tlb b{order:-1;font:800 26px/1 "Archivo",Arial,sans-serif}
+.t-acc,.t-inst{background:#64748b}.t-ech{background:#0e7490}.t-ex{background:#c2410c}.t-sf{background:#7a2908}.t-bil{background:#334155}
+.prep{background:var(--accent-soft);border-radius:12px;padding:10px 14px;margin:10px 0}
+.prep ul{margin:6px 0 0;padding-left:20px}
+.note{background:var(--chip);border-radius:10px;padding:8px 12px}
+.fiche{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;overflow:hidden}
+.fiche header{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.fiche header h4{flex:1;min-width:200px;font:800 22px/1.12 "Archivo",Arial,sans-serif}
+.tag{font-size:max(13px,var(--fs-min,15px));text-transform:uppercase;letter-spacing:.5px;color:var(--accent);font-weight:700}
+.dur{font-weight:700;color:var(--warn)}
+.fiche p{margin:6px 0}.fiche ol{margin:4px 0;padding-left:22px}.fiche li{margin:2px 0}
+.roles{border-left:4px solid var(--pD);padding-left:10px}
+.ok{border-left:4px solid var(--ok);padding-left:10px}
+.var{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:max(14.5px,var(--fs-min,15px))}.var p{background:var(--chip);border-radius:8px;padding:6px 10px;margin:4px 0}
+@media screen and (max-width:600px){.var{grid-template-columns:1fr}}
+.sch{float:right;width:46%;max-width:420px;margin:0 0 8px 14px}
+.sch-wide{margin-top:8px;clear:both}
+@media screen and (max-width:760px){.sch{float:none;width:100%;margin:6px 0}}
+svg{max-width:100%;height:auto}
+.tab{width:100%;border-collapse:collapse;font-size:max(14.5px,var(--fs-min,15px));margin:8px 0;background:var(--surface)}
+.tab th,.tab td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+.tab th{background:var(--chip)}
+@media screen and (max-width:760px){.tab.scroll{display:block;overflow-x:auto;max-width:100%}}
+.hero{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--accent);border-radius:14px;padding:16px;margin:8px 0 14px}
+.hero h2{margin-top:0}
+.agrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.acard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column}
+.acard h3{margin:6px 0 4px;font-size:19px}.acard p{margin:4px 0}.acard .actions{margin-top:auto;padding-top:6px}
+.acard-h{display:flex;justify-content:space-between;align-items:center}.anum{font:800 28px "Archivo",Arial,sans-serif;color:var(--accent)}
+.dlist{display:flex;flex-wrap:wrap;gap:8px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}
+.lvgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.lv{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--c);border-radius:14px;padding:12px}
+.lv h3{margin:0 0 4px;color:var(--c)}
+.pcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.pcard{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:12px;padding:10px 12px;break-inside:avoid}
+.pcard .kino{margin:6px 0 2px;background:#fff;border-radius:10px;padding:4px}.pcard .kino svg{display:block;width:100%;height:auto}
+.pcard h4{font:800 19px "Archivo",Arial,sans-serif;display:flex;justify-content:space-between;gap:8px}
+.pcard dl{margin:6px 0 0;display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:max(14.5px,var(--fs-min,15px))}
+.pcard dt{color:var(--muted);font-weight:700}.pcard dd{margin:0}
+.pcard .secu{color:#991b1b;font-size:max(14px,var(--fs-min,15px));margin:6px 0 0}
+:root[data-theme="dark"] .pcard .secu{color:#fca5a5}
+.fd2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.fd2>div{min-width:0}.fd h4{font:800 17px "Archivo",Arial,sans-serif;margin:6px 0}.fd ul{margin:2px 0 6px;padding-left:20px}.fd li{font-size:max(15px,var(--fs-min,15px))}
+.fdimg{display:block;width:100%;max-width:640px;margin:8px auto;border-radius:8px;border:1px solid var(--line)}
+@media screen and (max-width:700px){.fd2{grid-template-columns:1fr}}
+.proc{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:12px;padding:10px 12px;margin:10px 0;break-inside:avoid}
+.proc h4{font:800 20px "Archivo",Arial,sans-serif;margin-bottom:4px}
+.proc .dz{margin-top:8px;padding:4px}
+.tir-big{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:10px 0}
+.tir-big div{background:var(--accent);color:#fff;border-radius:14px;padding:14px}
+.tir-big small{display:block;font-size:15px;opacity:.9;text-transform:uppercase;letter-spacing:.04em}
+.tir-big b{display:block;font:800 clamp(24px,4vw,36px)/1.1 "Archivo",Arial,sans-serif;margin-top:4px}
+.tir-big i{display:block;font-style:normal;margin-top:4px;font-size:15px}
+.tirtab td{min-width:120px}
+.tirtab td.vide{color:var(--muted)}
+.tirtab .rel{border:0;background:none;color:var(--accent);font-size:18px;cursor:pointer;padding:0 4px}
+.tirtab .rel:disabled{color:var(--muted);opacity:.4;cursor:default}
+.form{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:8px 0}
+.form label{display:flex;flex-direction:column;gap:3px;font-size:max(14px,var(--fs-min,15px))}
+input,select,textarea{font:inherit;padding:8px 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);min-height:44px}
+textarea{width:100%;min-height:90px}
+.nt td,.nt th{text-align:center}.nt td:first-child,.nt th:first-child{text-align:left}
+.nt select{min-height:36px;padding:2px 4px}
+.nt .tot{font:800 18px "Archivo",Arial,sans-serif}
+.checks{columns:2}
+@media (max-width:520px){.checks{columns:1}}
+.pg{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;margin:12px 0}
+.lines{line-height:2.2}
+.timer{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);background:var(--ink);color:var(--bg);border-radius:14px;padding:10px 14px;display:flex;gap:12px;align-items:center;z-index:9;box-shadow:0 6px 20px rgba(0,0,0,.25);max-width:calc(100% - 32px)}
+.timer[hidden]{display:none!important}
+.timer b{font:800 30px "Archivo",Arial,sans-serif;font-variant-numeric:tabular-nums}
+.timer button{min-height:40px}
+.warnbox{background:#fef2f2;border:1px solid #fecaca;color:#7f1d1d;border-radius:12px;padding:10px 14px}
+:root[data-theme="dark"] .warnbox{background:#3a1515;border-color:#7f1d1d;color:#fecaca}
+#printzone{display:none}
+body.printmode #printzone{display:block;padding:0 8px}
+body.gym .seance h2{font-size:clamp(34px,5vw,44px)}
+body.gym .obj{font-size:19px}
+body.gym .fiche h4{font-size:30px}
+body.gym .fiche p,body.gym .fiche li{font-size:19px}
+body.gym .tlb b{font-size:34px}
+@media print{
+  @page{size:A4;margin:11mm}
+  body{background:#fff;color:#000;font-size:10pt}
+  :root{--surface:#fff;--ink:#000;--muted:#444;--line:#999;--chip:#f0f0f0;--accent-soft:#fbeee6}
+  header.top,nav,main,.noprint,.timer{display:none!important}
+  #printzone{display:block!important}
+  .seance{border:0;padding:0;margin:0;break-before:page}
+  .seance:first-child{break-before:auto}
+  .fiche{break-inside:auto;border-color:#999;padding:8px 10px}
+  .fiche header{break-after:avoid}
+  .fiche header h4{font-size:15pt}
+  .fiche p,.fiche li{font-size:10pt}
+  .sch{width:44%;max-width:none}
+  svg,figure,.var,.ok,tr,.dz-pc,.proc,.pcard,.lv{break-inside:avoid}
+  .tlb,.t-acc,.t-inst,.t-ech,.t-ex,.t-sf,.t-bil,.tir-big div{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .tlb{min-width:80px;padding:4px 8px}.tlb b{font-size:16pt}
+  .pg{border:0;padding:0;break-after:page}
+  .pg:last-child{break-after:auto}
+  h2,h3,h4{break-after:avoid}
+  a{color:#000;text-decoration:none}
+  .pcards,.lvgrid{display:block}.pcard,.lv{margin:0 0 6px}
+  .pcard .kino{max-width:300px;float:right;margin:0 0 4px 10px}.pcard{overflow:hidden}
+  .tab{font-size:9pt}
+}
+/* Cross training : bascule niveau / démarche, mouvements, formats */
+.ct-bas{display:inline-flex;gap:6px;flex-wrap:wrap}
+.ct-bas button{min-height:44px;padding:4px 12px;border-radius:999px;border:2px solid var(--accent);background:var(--surface);color:var(--accent);font:700 max(14px,var(--fs-min,15px)) var(--t);cursor:pointer}
+.ct-bas button.on{background:var(--accent);color:#fff}
+.mv-grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.mv{margin:0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;color:#172033}
+.mv-v{display:grid;place-items:center;min-height:92px}
+.mv-v img{max-width:100%;max-height:110px;object-fit:contain}
+.mv-v svg{width:100%;height:auto;max-height:110px}
+.mv figcaption{display:flex;flex-wrap:wrap;gap:4px;align-items:center;font-size:max(13px,var(--fs-min,15px));line-height:1.2;margin-top:4px}
+.mv figcaption b{flex:1 1 100%}
+.mv-t{font:700 max(11px,var(--fs-min,15px)) var(--t);padding:1px 6px;border-radius:6px;background:#eef1f4;color:#334155}
+.mv-t.z-INF{background:#cffafe;color:#155e75}.mv-t.z-SUP{background:#ede9fe;color:#5b21b6}.mv-t.z-TRONC{background:#fef3c7;color:#92400e}.mv-t.z-CARDIO{background:#ffe4e6;color:#9f1239}
+.mv-t.mat{background:#334155;color:#fff}
+svg.fmt,svg.org,svg.etoile{width:100%;height:auto;background:#fff;border-radius:12px;color:#172033}
+svg.etoile{max-width:300px;display:block;margin:auto}
+.etire{margin:0;padding-left:18px;font-size:max(14px,var(--fs-min,15px))}
+.cap{font-size:max(13px,var(--fs-min,15px));color:var(--muted);margin:6px 2px 0}
+.mat-jour{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:700}
+
+.pcard .kino img{display:block;max-width:100%;max-height:130px;margin:auto;object-fit:contain}
+.secu{color:#991b1b}
+@media print{.mv,.pcard,.card{break-inside:avoid}.mv-v img{max-height:80px}.pcard .kino img{max-height:90px}}
+</style>
+<script src="eps-commun.js" defer></script>
+<script>/* Ouvert depuis l’écran de cours (bouton Outils) : on ne garde que le contenu de l’outil. */
+try{if(window.self!==window.top)document.documentElement.classList.add('outil')}catch(e){document.documentElement.classList.add('outil')}</script>
+<style>html.outil body>header.top,html.outil nav#nav{display:none!important}
+svg.fmt{max-width:640px;display:block}</style>
+<style>/* Lisibilité terrain : textes à 15 px minimum à l'écran ; tailles d'origine à l'impression. */@media print{:root{--fs-min:0px}}</style>
+<link rel="stylesheet" href="eps-charte-v1.css">
+<style>/* Charte v1 — Cross training : couleur de l'activité */
+:root{--act:#c2410c;--act-fonce:#782808;--act-pale:#f9e6dc;--act-sombre:#e2967a;--act-pale-sombre:#3a2014;
+  --accent:#c2410c;--accent-soft:#f9e6dc;--accent-fg:#ffffff;--sport:#c2410c}
+:root[data-theme="dark"]{--accent:#e2967a;--accent-soft:#3a2014;--accent-fg:#0d1117;--sport:#e2967a}
+</style>
+</head>
+<body>
+<header class="top"><div class="toprow"><h1><img class="appicon" src="icon-192.png" alt="" width="40" height="40">Cycle cross training · CA5 · 1re et Tle</h1><a class="cbtn" href="./">‹ Écran de cours</a></div>
+<p>Savoir s’entraîner · 9 séances de 75 min · binômes · tatami, banc, box, kettlebell (1re), barre (Tle) · démarche progressive ou GAREEPS</p></header>
+<nav id="nav" aria-label="Onglets"></nav>
+<main id="main"></main>
+<div id="printzone"></div>
+<div class="timer noprint" id="timer" hidden><span id="tm-lab"></span><b id="tm-t">00:00</b><button class="btn mini ghost" id="tm-close" type="button">Arrêter</button></div>
+<script src="cross-training-donnees.js"></script>
+<script>
+'use strict';
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const LS = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+const PDF = id => `pdf/ct-${id}.pdf`;
+const PK = Object.keys(PARCOURS);
+const NIVL = k => (k === "p" || k === "g") ? "Première" : "Terminale";
+
+/* ---------- Fiches et séances ---------- */
+function ficheHTML(f, n){
+  const wide = /^(mv:|wod|srp|fmt:)/.test(f.schema || "") && (f.schema || "").split(",").length > 3;
+  const sch = f.schema ? `<div class="${wide ? "sch-wide" : "sch"}">${schema(f.schema)}</div>` : "";
+  const v = (f.moins || f.plus) ? `<div class="var">${f.moins ? `<p><b>−</b> ${esc(f.moins)}</p>` : ""}${f.plus ? `<p><b>+</b> ${esc(f.plus)}</p>` : ""}</div>` : "";
+  return `<article class="fiche">
+  <header><span class="tag">${esc(f.cat)}</span><h4>${n ? n + ". " : ""}${esc(f.titre)}</h4><span class="dur">${f.duree} min</span></header>
+  ${wide ? "" : sch}
+  <p><b>Dispositif.</b> ${esc(f.dispo)}</p>
+  <p class="roles"><b>Rôle de chacun.</b> ${esc(f.roles)}</p>
+  <p><b>Déroulement.</b></p><ol>${f.deroul.map(d => `<li>${esc(d)}</li>`).join("")}</ol>
+  <p><b>Consignes et critères de réalisation.</b> ${esc(f.crit)}</p>
+  <p class="ok"><b>Critère de réussite.</b> ${esc(f.reussite)}</p>
+  ${v}${wide ? sch : ""}</article>`;
+}
+function statut(k, i){ const j = LS.get("ct_jour_" + k, -1), S = PARCOURS[k].L[i];
+  if(S.status === "eval") return i === j ? ["jour","Évaluation · aujourd’hui"] : ["eval","Évaluation"];
+  return i === j ? ["jour","Aujourd’hui"] : (j >= 0 && i < j) ? ["faite","Faite"] : ["","À venir"]; }
+function seanceHTML(k, i, forPrint){
+  const S = PARCOURS[k].L[i], st = statut(k, i);
+  const frise = `<div class="tl">` + S.tl.map(b => `<button type="button" class="tlb t-${b[2]}" style="flex:${b[1]}" data-min="${b[1]}" data-lab="${esc(b[0])}" title="Minuteur de ${b[1]} min"><span>${esc(b[0])}</span><b>${b[1]}′</b></button>`).join("") + `</div>`;
+  const tot = S.tl.reduce((a, b) => a + (+b[1]), 0);
+  let h = `<section class="seance" id="sea-${k}-${S.id}">
+  <div>${st[1] ? `<span class="pill st-${st[0]}">${st[1]}</span>` : ""}<span class="pill">${esc(PARCOURS[k].nom)}</span><span class="pill">Matériel : ${esc(S.mat)}</span></div>
+  <h2>${S.id} · ${esc(S.titre)}</h2>
+  <p class="obj"><b>Objectif.</b> ${esc(S.obj)}</p>
+  ${frise}<p class="small muted">${tot} min de pratique.</p>
+  <div class="prep"><b>Ce que la séance prépare pour l’évaluation</b><ul>${S.prepare.map(p => `<li>${esc(p)}</li>`).join("")}</ul></div>`;
+  if(S.install) h += `<p class="note"><b>Installation et sécurité.</b> ${esc(S.install)}</p>`;
+  S.fiches.forEach((f, n) => h += ficheHTML(f, n + 1));
+  if(!forPrint) h += `<div class="actions noprint"><button class="btn" type="button" data-today="${k}|${i}">Marquer comme séance du jour</button><button class="btn ghost" type="button" data-print="${k}-${S.id}">Imprimer cette séance</button><a class="btn ghost" href="${PDF(k + "-" + S.id)}">PDF</a></div>`;
+  return h + `</section>`;
+}
+
+/* ---------- Mouvements ---------- */
+let filtre = LS.get("ct_filtre", {z:"", niv:"p"});
+function mvFiche(m){
+  return `<article class="pcard" style="--c:${ZONES[m.z].c}"><div class="kino">${mvVisuel(m)}</div>
+  <h4><span>${esc(m.nom)}</span><span class="pill">${m.z} · N${m.n}${m.m !== "pdc" ? " · " + MATERIEL[m.m].court : ""}${m.tle ? " · Tle" : ""}</span></h4>
+  <dl><dt>Placement</dt><dd>${esc(m.c[0])}</dd><dt>Respiration</dt><dd>${esc(m.c[1])}</dd><dt>Amplitude</dt><dd>${esc(m.c[2])}</dd><dt>−</dt><dd>${esc(m.moins)}</dd><dt>+</dt><dd>${esc(m.plus)}</dd></dl>
+  <p class="secu"><b>Erreur fréquente :</b> ${esc(m.err)}</p></article>`;
+}
+function mouvementsHTML(forPrint){
+  const L = MOUV.filter(m => (forPrint || !filtre.z || m.z === filtre.z) && (forPrint || filtre.niv === "t" || !m.tle));
+  const par = Object.keys(ZONES).map(z => { const l = L.filter(m => m.z === z); return l.length ? `<h3 style="color:${ZONES[z].c}">${ZONES[z].nom} · ${l.length}</h3><div class="pcards">${l.map(mvFiche).join("")}</div>` : ""; }).join("");
+  return par;
+}
+
+/* ---------- Vues ---------- */
+const VIEWS = {};
+let curK = LS.get("ct_parcours", "p"); if(!PARCOURS[curK]) curK = "p";
+let curSeance = Math.max(0, LS.get("ct_jour_" + curK, 0));
+const parcoursBtns = () => `<div class="actions">${PK.map(k => `<button type="button" class="btn ${k === curK ? "" : "ghost"}" data-k="${k}">${esc(PARCOURS[k].nom)}</button>`).join("")}</div>`;
+VIEWS.accueil = () => {
+  const L = PARCOURS[curK].L;
+  const cards = L.map((S, i) => { const st = statut(curK, i); const ex = S.fiches.filter(f => !/^(Échauffement|Retour|GAREEPS · bilan)/.test(f.cat)).map(f => esc(f.titre));
+    return `<div class="acard"><div class="acard-h"><span class="anum">${S.id}</span>${st[1] ? `<span class="pill st-${st[0]}">${st[1]}</span>` : ""}</div><h3>${esc(S.titre)}</h3><p class="small muted">${esc(S.mat)}</p><p class="small">${ex.join(" · ")}</p><div class="actions"><button class="btn mini" type="button" data-open-s="${i}">Ouvrir</button></div></div>`; }).join("");
+  return `<div class="hero"><h2>Savoir s’entraîner en cross training</h2>
+  <p>Deux démarches pour la même épreuve. <b>Progressive</b> : toute la classe suit la même séance, mouvement après mouvement, format après format. <b>GAREEPS</b> : une situation complexe d’évaluation (S2, S5, S8) fait apparaître les besoins de chacun ; les élèves travaillent ensuite par axe (conception, production, analyse). Les deux préparent les 2 mobiles de l’épreuve du lycée : intensité modérée (140-160) et élevée (160-180).</p>
+  <p class="small">Matériel : <b>Première</b> poids de corps, banc, box, kettlebell ou haltère léger. <b>Terminale</b> : on ajoute la barre. ${esc(CHARGES.p)}</p></div>
+  ${parcoursBtns()}<div class="agrid">${cards}</div>
+  <h3>Imprimer</h3><div class="dlist">${PK.map(k => `<a class="btn ghost" href="${PDF("cycle-" + k)}">Cycle ${esc(PARCOURS[k].nom)}</a>`).join("")}<a class="btn ghost" href="${PDF("mouvements")}">Planche des mouvements</a><a class="btn ghost" href="${PDF("carnet")}">Carnet élève</a><a class="btn ghost" href="${PDF("evaluation")}">Épreuve et barèmes</a><a class="btn ghost" href="${PDF("banque")}">Banque</a><a class="btn ghost" href="${PDF("echauffement")}">Échauffements</a></div>
+  ${CT_ERREURS.length ? `<p class="warnbox">Contrôle des durées : ${CT_ERREURS.map(esc).join(" · ")}</p>` : ""}`;
+};
+VIEWS.seances = () => {
+  const L = PARCOURS[curK].L;
+  return `${parcoursBtns()}<div class="sgrid" style="grid-template-columns:repeat(9,1fr)">${L.map((S, i) => { const st = statut(curK, i); return `<button type="button" class="sbtn st-${st[0]} ${i === curSeance ? "on" : ""}" data-s="${i}"><b>${S.id}</b><small>${esc(S.titre.split(/ :| ·|,/)[0])}</small></button>`; }).join("")}</div>
+  ${seanceHTML(curK, curSeance)}<div class="actions noprint"><button class="btn ghost" type="button" data-print="cycle-${curK}">Imprimer le cycle complet</button><a class="btn ghost" href="${PDF("cycle-" + curK)}">PDF du cycle</a></div>`;
+};
+VIEWS.mouvements = () => `<h2>Les mouvements</h2><p>${MOUV.length} mouvements, classés par zone et par niveau (référentiel : N1 gainage, statique ou cardio facile · N2 dynamique modéré · N3 cardio et technique avec impulsions). Les trois critères de chaque mouvement sont ceux de l’AFL1 : placement, respiration, amplitude.</p>
+  <div class="actions">${[["","Toutes les zones"]].concat(Object.keys(ZONES).map(z => [z, ZONES[z].nom])).map(z => `<button type="button" class="btn ${filtre.z === z[0] ? "" : "ghost"} mini" data-fz="${z[0]}">${esc(z[1])}</button>`).join("")}
+  <button type="button" class="btn ${filtre.niv === "p" ? "" : "ghost"} mini" data-fn="p">Matériel de Première</button><button type="button" class="btn ${filtre.niv === "t" ? "" : "ghost"} mini" data-fn="t">Avec la barre (Tle)</button>
+  <button class="btn ghost mini" type="button" data-print="mouvements">Imprimer</button></div>
+  <p class="note small">${esc(CHARGES.p)}<br>${esc(CHARGES.t)}</p>${mouvementsHTML()}`;
+VIEWS.formats = () => `<h2>Les formats de travail</h2><p>L’épreuve du lycée ne contient que le <b>TABATA</b> et l’<b>EMOM</b>. AMRAP, for time et EMOM+1 font partie de la culture de l’activité : utiles pour se tester et comprendre l’effort, mais pas notés.</p>
+  ${FORMATS.map(f => `<div class="card"><h3>${esc(f.nom)} ${f.ep ? `<span class="pill st-faite">dans l’épreuve</span>` : `<span class="pill">hors épreuve</span>`}</h3><div class="sch">${schema(f.spec)}</div><p>${esc(f.def)}</p><p><b>Règle.</b> ${esc(f.regle)}</p>${f.vertical ? `<p>${esc(f.vertical)}<br>${esc(f.horizontal)}</p>` : ""}${f.lire ? `<p class="ok">${esc(f.lire)}</p>` : ""}<p class="secu"><b>Piège :</b> ${esc(f.piege)}</p><div style="clear:both"></div></div>`).join("")}
+  <p class="note">Chrono des élèves : <a href="${LIEN_CHRONO}">l’appli Cross Training Pompidou</a> (Tabata, EMOM, EMOM+1, AMRAP, for time ; bilan par QR code).</p>`;
+const tabMob = M => `<table class="tab scroll"><tr><th>Niveau</th><th>Effort / repos</th><th>Organisation</th><th>Exercices</th><th>Remarque</th></tr>${M.tabata.map(r => `<tr><th>${r[0]}</th><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td class="${r[4] ? "secu" : ""}">${esc(r[4])}</td></tr>`).join("")}</table>`;
+VIEWS.mobiles = () => `<h2>Les deux mobiles de l’épreuve</h2>${schema("wod")}
+  <div class="lvgrid">${["mod","elev"].map(k => { const M = MOBILES[k]; return `<div class="lv" style="--c:${M.c}"><h3>${M.nom}</h3><p class="small"><b>${esc(M.sous)}</b> · FC visée <b>${M.fc}</b></p><p>${esc(M.wod)}</p><p>${esc(M.exos)}</p><p class="small muted">${esc(M.effets)}</p></div>`; }).join("")}</div>
+  <h3>TABATA : les 3 niveaux, intensité modérée</h3>${tabMob(MOBILES.mod)}<h3>TABATA : les 3 niveaux, intensité élevée</h3>${tabMob(MOBILES.elev)}<p class="note">${esc(MOBILES.emom)}</p>
+  <h3>Correspondance avec l’appli chrono des élèves</h3><table class="tab"><tr><th>Filière de l’appli</th><th>Mobile de l’épreuve</th><th>Ce qu’il faut savoir</th></tr>${FILIERES_APPLI.map(r => `<tr><td>${esc(r[0])}</td><td><b>${esc(r[1])}</b></td><td>${esc(r[2])}</td></tr>`).join("")}</table>
+  <h3>Fréquence cardiaque</h3><ul>${["prise","repos","max","karvonen","epreuve"].map(k => `<li>${esc(FC[k])}</li>`).join("")}</ul>
+  <h3>Échelle de ressenti</h3><table class="tab"><tr><th></th><th>Ressenti</th><th>Repère</th></tr>${RESSENTIS.map(r => `<tr><th>${r[0]}</th><td>${r[1]}</td><td>${esc(r[2])}</td></tr>`).join("")}</table>`;
+function echHTML(){ const G = ECHAUFF.guide, A = ECHAUFF.autonome;
+  return `<h3>${esc(G.titre)} · ${G.duree} min</h3>${schema("echauff")}<table class="tab">${G.etapes.map(e => `<tr><th>${esc(e[0])}</th><td>${esc(e[1])}</td></tr>`).join("")}</table>
+  <h3>${esc(ECHAUFF.specifique.titre)} · ${ECHAUFF.specifique.duree} min</h3><p>${esc(ECHAUFF.specifique.texte)}</p>
+  <h3>${esc(A.titre)}</h3><ol>${A.etapes.map(e => `<li>${esc(e)}</li>`).join("")}</ol><p class="ok"><b>Ce que le professeur vérifie :</b> ${A.criteres.map(esc).join(" · ")}</p>
+  <p class="note">${esc(ECHAUFF.carte)}</p>
+  <div class="pg"><h3>Notre échauffement (à remplir par le binôme)</h3><p class="small">Noms : ……………………… / ……………………… · WOD du jour : ………………………</p><table class="tab lines"><tr><th style="width:30%">Étape</th><th>Exercices et durées</th></tr><tr><td>1. Température (3 min)</td><td></td></tr><tr><td>2. Articulations (3 min)</td><td></td></tr><tr><td>3. Activation des zones du WOD (3 min)</td><td></td></tr><tr><td>4. AMRAP en relais 3 min</td><td>Exercice 1 : ………… × … · Exercice 2 : ………… × … · Tours : ……</td></tr><tr><td>FC à la fin</td><td></td></tr></table></div>
+  <h3>Étirements</h3><p>${esc(ETIRE_REGLE)}</p><table class="tab">${ETIREMENTS.map(e => `<tr><th>${esc(e[0])}</th><td>${esc(e[1])}</td></tr>`).join("")}</table>`; }
+VIEWS.echauff = () => `<h2>Échauffements et étirements</h2><div class="actions"><button class="btn ghost" type="button" data-print="echauffement">Imprimer</button></div>${echHTML()}`;
+VIEWS.banque = () => `<h2>Banque de situations</h2><p>4 situations par catégorie, pour remplacer un exercice qui ne fonctionne pas ou pour différencier.</p><div class="actions"><button class="btn ghost" type="button" data-print="banque">Imprimer</button></div>${banqueHTML()}`;
+function banqueHTML(){ return BANQUE.map(c => `<h3>${esc(c.cat)}</h3><div class="pcards">${c.items.map(x => `<div class="pcard" style="--c:var(--accent)"><h4><span>${esc(x.t)}</span><span class="pill">${x.n}</span></h4><p class="small muted">${esc(x.rem)}</p><p>${esc(x.d)}</p><p class="ok small"><b>Réussi si</b> ${esc(x.r)}</p></div>`).join("")}</div>`).join(""); }
+VIEWS.diff = () => `<h2>Différenciation</h2><table class="tab">${DIFF.map(d => `<tr><th style="width:32%">${esc(d[0])}</th><td>${esc(d[1])}</td></tr>`).join("")}</table><h3>Les rôles</h3><table class="tab">${ROLES.map(r => `<tr><th>${esc(r[0])}</th><td>${esc(r[1])}</td></tr>`).join("")}</table>`;
+function gareepsHTML(){ const G = GAREEPS;
+  return `<p>${esc(G.principe)}</p><div class="sch">${schema("etoile")}</div>
+  ${G.axes.map(a => `<h3 style="color:${a.c}">${esc(a.nom)}</h3><p class="small muted">${esc(a.besoin)}</p><ul>${a.crit.map(c => `<li>${esc(c)}</li>`).join("")}</ul>`).join("")}<div style="clear:both"></div>
+  <h3>Situations de résolution de problème (SRP)</h3>${schema("srp")}<table class="tab scroll"><tr><th>Axe</th><th>Situation</th><th>Dispositif</th><th>But</th><th>Variable</th></tr>${G.srp.map(s => `<tr><th>${esc(G.axes.find(a => a.id === s.axe).nom)}</th><td>${esc(s.nom)}</td><td>${esc(s.dispo)}</td><td>${esc(s.but)}</td><td>${esc(s.variable)}</td></tr>`).join("")}</table>
+  <h3>Situations de transformation de l’organisation motrice (STOM)</h3><table class="tab">${G.stom.map(s => `<tr><th>${esc(s[0])}</th><td>${esc(s[1])}</td></tr>`).join("")}</table>
+  <h3>Grille d’observation des 3 axes (SCE)</h3>${grilleSCE()}`; }
+function grilleSCE(){ return `<table class="tab"><tr><th>Axe</th><th>Critère</th><th>WOD 1</th><th>WOD 2</th><th>WOD 3</th></tr>${GAREEPS.axes.map(a => a.crit.map((c, i) => `<tr>${i === 0 ? `<th rowspan="4" style="color:${a.c}">${esc(a.nom)}</th>` : ""}<td>${esc(c)}</td><td></td><td></td><td></td></tr>`).join("")).join("")}<tr><th colspan="2">Score parlant (1 · 10 · 100 · 1 000)</th><td></td><td></td><td></td></tr></table>`; }
+VIEWS.gareeps = () => `<h2>La démarche GAREEPS</h2><div class="actions"><button class="btn ghost" type="button" data-print="gareeps">Imprimer</button></div>${gareepsHTML()}`;
+function evalHTML(){ const R = REF;
+  const deg = A => `<table class="tab scroll"><tr><th>Degré 1</th><th>Degré 2</th><th>Degré 3</th><th>Degré 4</th></tr><tr>${A.degres.map(d => `<td>${esc(Array.isArray(d) ? d[0] : d)}${Array.isArray(d) ? `<br><b>${esc(d[1])}</b>` : ""}</td>`).join("")}</tr></table>`;
+  return `<p class="note"><b>AFL.</b> ${esc(R.afl)}</p><h3>Principes de l’épreuve</h3><ul>${R.epreuve.map(x => `<li>${esc(x)}</li>`).join("")}</ul>${schema("wod")}
+  <h3>Le jour J en 75 min (S9)</h3><table class="tab"><tr><th>Temps</th><th>Durée</th></tr>${PARCOURS.p.L[8].tl.map(t => `<tr><td>${esc(t[0])}</td><td>${t[1]} min</td></tr>`).join("")}</table>
+  <p class="warnbox"><b>À faire corriger dans le référentiel.</b></p><ol>${R.erreurs.map(e => `<li>${esc(e)}</li>`).join("")}</ol>
+  <h3>${esc(R.afl1a.titre)}</h3><p class="small">${R.afl1a.items.map(esc).join(" · ")}</p>${deg(R.afl1a)}
+  <h3>${esc(R.afl1b.titre)}</h3><p class="small">${R.afl1b.items.map(esc).join(" · ")}</p>${deg(R.afl1b)}
+  <h3>${esc(R.afl2.titre)}</h3><p class="small">${R.afl2.items.map(esc).join(" · ")}</p>${deg(R.afl2)}<table class="tab"><tr><th>Choix</th><th>Degré 1</th><th>Degré 2</th><th>Degré 3</th><th>Degré 4</th></tr>${R.afl2.baremes.map(b => `<tr>${b.map((x, i) => i ? `<td>${x}</td>` : `<th>${x}</th>`).join("")}</tr>`).join("")}</table>
+  <h3>${esc(R.afl3.titre)}</h3><p class="small">${R.afl3.items.map(esc).join(" · ")}</p>${deg(R.afl3)}<p class="small">${esc(R.afl3.note)} Barème : mêmes tranches que l’AFL2 (2, 4 ou 6 points).</p>
+  <h3>Choix de l’élève</h3><ul>${R.choix.map(x => `<li>${esc(x)}</li>`).join("")}</ul><p class="small muted">${esc(R.axes)}</p>
+  <h3>Lien entre l’évaluation et les séances</h3>${lienEval()}`; }
+function lienEval(){
+  const el = [["AFL1 · postures, amplitude, respiration","S1, S3, S6 (mouvements) ; S5, S8 (WOD complets)"],["AFL1 · rythme (FC de fin de cycle)","S1, S2 (FC), S4 (deux intensités), S5, S8"],["AFL1 · échauffement et récupération","S1 à S4 guidé ; S5 à S9 autonome"],["AFL1 · étirements","Chaque fin de séance"],["AFL1 · nombre de cycles","S5, S8 (format complet)"],["AFL1 · analyser","Carnet à chaque séance ; S8 (fiche du jour J)"],["AFL2 · carnet","Tableau personnel S1, entraînement S6-S7, séances S1-S9"],["AFL3 · rôles","Assistant dès S1 ; juge S7 ; coach S6-S7 ; observateur S5, S8"]];
+  return `<table class="tab"><tr><th>Élément du référentiel</th><th>Séances qui le préparent</th><th>Statut</th></tr>${el.map(e => `<tr><td>${esc(e[0])}</td><td>${esc(e[1])}</td><td>${/cycles/.test(e[0]) ? "à surveiller (modéré : 2 WOD seulement)" : "ok"}</td></tr>`).join("")}</table>`; }
+VIEWS.eval = () => `<h2>L’épreuve du lycée</h2><div class="actions"><button class="btn ghost" type="button" data-print="evaluation">Imprimer</button></div>${evalHTML()}`;
+function carnetHTML(){
+  const lignes = (n, cols) => Array.from({length:n}, () => `<tr>${cols.map(() => "<td>&nbsp;</td>").join("")}</tr>`).join("");
+  return `<div class="pg"><h2>Mon carnet d’entraînement · cross training</h2><p class="small">Nom : ……………………… Classe : ……… Partenaire : ………………………</p>
+  <h3>1. Mon tableau personnel</h3><table class="tab"><tr><th>FC de repos</th><td></td><th>FC max (220 − âge)</th><td></td></tr><tr><th>Mon mobile</th><td colspan="3">□ Modéré (140-160) □ Élevé (160-180) · parce que : ……………………………………</td></tr><tr><th>Charges</th><td colspan="3">Kettlebell : ……… kg · Barre (Tle) : soulevé de terre ……… front squat ……… push press ………</td></tr><tr><th>AMRAP test</th><td colspan="3">S1 : ……… tours + ……… · S7 : ……… tours + ………</td></tr></table>
+  <table class="tab"><tr><th>Zone</th><th>Mes exercices N1</th><th>N2</th><th>N3</th></tr>${Object.values(ZONES).map(z => `<tr><th>${z.court}</th><td></td><td></td><td></td></tr>`).join("")}</table></div>
+  <div class="pg"><h3>2. Mes séances</h3><table class="tab lines"><tr><th>S</th><th>Ce que j’ai fait (format, niveau)</th><th>FC</th><th>Ressenti 1-4</th><th>Régulations</th><th>Pour la prochaine fois</th></tr>${Array.from({length:9}, (_, i) => `<tr><th>S${i + 1}</th><td></td><td></td><td></td><td></td><td></td></tr>`).join("")}</table>
+  <p class="small">Ressenti : 1 facile (je parle normalement) · 2 moyen (phrases courtes) · 3 difficile (quelques mots) · 4 très difficile (je ne peux plus parler).</p></div>
+  <div class="pg"><h3>3. Mon entraînement personnel · fiche du jour J (remplie en S8)</h3><p class="small">Mobile : ………… · Répartition AFL2 / AFL3 : □ 6/2 □ 4/4 □ 2/6 · FC visée : ………… · Échauffement écrit : □</p>
+  ${[1, 2, 3].map(w => `<p><b>WOD ${w}</b> (${w === 3 ? "élevé seulement" : "modéré et élevé"}) · Format : ……………… · Niveau : ……… · Récupération après : ………</p><table class="tab"><tr><th>Exercice</th><th>Zone</th><th>N</th><th>Rép. / temps</th><th>Version −</th><th>Version +</th><th>Rép. R1…R8 / temps restant</th></tr>${lignes(5, [1,2,3,4,5,6,7])}</table>`).join("")}
+  <p class="small">FC après chaque WOD : ……… / ……… / ……… · Ressenti : ……… / ……… / ………</p></div>
+  <div class="pg"><h3>4. Mon analyse (AFL1 · analyser)</h3><p class="lines">Bilan de chaque WOD : ……………………………………………………………………………………………………………………………………<br>Pourquoi ces choix : …………………………………………………………………………………………………………………………………………<br>Bilan de la séance : ……………………………………………………………………………………………………………………………………………<br>Trame du prochain cours (ce que je changerais) : ………………………………………………………………………………………………</p>
+  <h3>Analyse de mon binôme (AFL3)</h3><p class="lines">Ses choix, sa FC, ses régulations : ………………………………………………………………………………………………………………<br>Mon conseil pour progresser : ………………………………………………………………………………………………………………………</p></div>
+  <div class="pg"><h3>5. Mon étoile (démarche GAREEPS)</h3><div style="max-width:280px">${svgEtoile([0, 0, 0])}</div><p class="small">SCE 1 : conception …… production …… analyse …… · SCE 2 : …… …… …… · SCE 3 : …… …… …… · Mon axe prioritaire : ……………</p>${grilleSCE()}</div>`;
+}
+VIEWS.carnet = () => `<h2>Le carnet de l’élève</h2><p>Support de l’AFL2 (tableau personnel, entraînement personnel, séances, ressentis) et de l’analyse du jour J. À imprimer recto verso.</p><div class="actions"><button class="btn" type="button" data-print="carnet">Imprimer le carnet</button><a class="btn ghost" href="${PDF("carnet")}">PDF</a></div>${carnetHTML()}`;
+VIEWS.sources = () => `<h2>Sources</h2><ul>${SOURCES.map(s => `<li>${esc(s[0])}${s[1] ? ` <a href="${esc(s[1])}">${esc(s[1])}</a>` : ""}</li>`).join("")}</ul>
+  <h3>Crédits des images</h3><p class="small">Photos détourées rassemblées par l’équipe EPS (dossier « Photos CF sans fond ») ; certaines proviennent de LitoBox et de banques d’images : usage pédagogique interne. Dessins des mouvements à la kettlebell, à la box et à la barre : faits pour cette appli.</p>`;
+
+const TABS = [["accueil","Accueil"],["seances","Séances"],["mouvements","Mouvements"],["formats","Formats"],["mobiles","Mobiles et FC"],["echauff","Échauffements"],["banque","Banque"],["diff","Différenciation"],["gareeps","GAREEPS"],["eval","Épreuve"],["carnet","Carnet"],["sources","Sources"]];
+const hs = location.hash.match(/^#seance-(\w)-(S\d)/);
+if(hs && PARCOURS[hs[1]]){ curK = hs[1]; curSeance = Math.max(0, PARCOURS[curK].L.findIndex(s => s.id === hs[2])); }
+const tabH = (location.hash.match(/^#tab-(\w+)/) || [])[1];
+let curTab = hs ? "seances" : (tabH && TABS.some(t => t[0] === tabH)) ? tabH : LS.get("ct_tab", "accueil");
+function render(){
+  $("#nav").innerHTML = TABS.map(t => `<button type="button" class="${t[0] === curTab ? "on" : ""}" data-tab="${t[0]}">${t[1]}</button>`).join("");
+  $("#main").innerHTML = (VIEWS[curTab] || VIEWS.accueil)();
+}
+
+/* ---------- Événements ---------- */
+document.addEventListener("click", e => {
+  const b = e.target.closest("button"); if(!b) return;
+  if(b.dataset.tab){ curTab = b.dataset.tab; LS.set("ct_tab", curTab); render(); window.scrollTo(0, 0); return; }
+  if(b.dataset.k){ curK = b.dataset.k; LS.set("ct_parcours", curK); curSeance = Math.min(curSeance, PARCOURS[curK].L.length - 1); render(); return; }
+  if(b.dataset.openS !== undefined){ curSeance = +b.dataset.openS; curTab = "seances"; LS.set("ct_tab", curTab); render(); window.scrollTo(0, 0); return; }
+  if(b.dataset.s !== undefined){ curSeance = +b.dataset.s; render(); return; }
+  if(b.dataset.today !== undefined){ const [k, i] = b.dataset.today.split("|"); LS.set("ct_jour_" + k, +i); render(); return; }
+  if(b.dataset.fz !== undefined){ filtre.z = b.dataset.fz; LS.set("ct_filtre", filtre); render(); return; }
+  if(b.dataset.fn){ filtre.niv = b.dataset.fn; LS.set("ct_filtre", filtre); render(); return; }
+  if(b.dataset.print){ doPrint(b.dataset.print); return; }
+  if(b.classList.contains("tlb")){ startTimer(+b.dataset.min, b.dataset.lab); return; }
+  if(b.id === "tm-close"){ stopTimer(); return; }
+});
+
+/* ---------- Minuteur ---------- */
+let TM = null;
+function beep(){ try{ const a = new (window.AudioContext || window.webkitAudioContext)(), o = a.createOscillator(); o.connect(a.destination); o.frequency.value = 880; o.start(); o.stop(a.currentTime + .4); }catch(e){} }
+function startTimer(min, lab){ stopTimer(); const fin = Date.now() + min*60000; $("#timer").hidden = false; $("#tm-lab").textContent = lab;
+  const tick = () => { const r = Math.max(0, Math.round((fin - Date.now())/1000)); $("#tm-t").textContent = String(Math.floor(r/60)).padStart(2, "0") + ":" + String(r%60).padStart(2, "0"); if(r === 0){ stopTimer(); beep(); } };
+  tick(); TM = setInterval(tick, 1000); }
+function stopTimer(){ if(TM) clearInterval(TM); TM = null; $("#timer").hidden = true; }
+
+/* ---------- Impression ---------- */
+function printContent(kind){
+  const m = kind.match(/^(\w)-(S\d)$/);
+  if(m && PARCOURS[m[1]]) return seanceHTML(m[1], PARCOURS[m[1]].L.findIndex(s => s.id === m[2]), true);
+  const c = kind.match(/^cycle-(\w)$/);
+  if(c && PARCOURS[c[1]]){ const k = c[1], L = PARCOURS[k].L;
+    const som = `<section class="seance"><h2>Cycle cross training CA5 · ${esc(PARCOURS[k].nom)} · 9 séances de 75 min</h2><p>Matériel : ${k === "p" || k === "g" ? "poids de corps, banc, box, kettlebell ou haltère léger" : "poids de corps, banc, box, kettlebell, barre"}. Épreuve : 2 mobiles (modéré 140-160, élevé 160-180), TABATA et EMOM.</p><table class="tab"><tr><th>Séance</th><th>Titre</th><th>Matériel</th><th>Situations</th></tr>${L.map(S => `<tr><th>${S.id}</th><td>${esc(S.titre)}</td><td>${esc(S.mat)}</td><td>${S.fiches.slice(1, -1).map(f => esc(f.titre)).join(" · ")}</td></tr>`).join("")}</table>${schema("wod")}</section>`;
+    return som + L.map((S, i) => seanceHTML(k, i, true)).join(""); }
+  if(kind === "mouvements") return `<section><h2>Les mouvements du cycle</h2>${mouvementsHTML(true)}</section>`;
+  if(kind === "banque") return `<section><h2>Banque de situations</h2>${banqueHTML()}</section>`;
+  if(kind === "echauffement") return `<section><h2>Échauffements et étirements</h2>${echHTML()}</section>`;
+  if(kind === "gareeps") return `<section><h2>La démarche GAREEPS</h2>${gareepsHTML()}</section>`;
+  if(kind === "evaluation") return `<section><h2>Cross training · épreuve du lycée</h2>${evalHTML()}</section>`;
+  if(kind === "carnet") return carnetHTML();
+  return "";
+}
+function doPrint(kind){
+  $("#printzone").innerHTML = printContent(kind);
+  document.body.classList.add("printing");
+  setTimeout(() => { window.print(); document.body.classList.remove("printing"); $("#printzone").innerHTML = ""; }, 60);
+}
+
+/* ---------- Démarrage ---------- */
+(function(){
+  const q = new URLSearchParams(location.search).get("print");
+  if(q){ document.body.classList.add("printmode"); $("#printzone").innerHTML = printContent(q); return; }
+  render();
+})();
+if("serviceWorker" in navigator && location.protocol === "https:"){ navigator.serviceWorker.register("sw.js").catch(() => {}); }
+</script>
+</body>
+</html>

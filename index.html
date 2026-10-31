@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#c2410c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Cross Training">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-32.png">
+<title>Cycle cross training</title>
+<!-- Page FABRIQUÉE par mon-eps/atelier/ecran-de-cours/construire.py : ne pas la modifier à la main ici.
+     Moteur commun : ecran.js et ecran.css. Propre à l'activité : le <style> et le <script> ci-dessous. -->
+<link rel="stylesheet" href="ecran.css">
+<style>
+/* ===== Propre au cycle cross training : couleurs, niveaux, schémas ===== */
+:root{--sol:#ECEFEE; --craie:#FFFFFF; --encre:#172033; --repere:#5A6475; --trait:#D5DBDD;
+  --ligne:#C2410C; --ligne-fonce:#7A2908; --ligne-pale:#F9E6DC;
+  --vert:#1D6B3A; --vert-pale:#E6F3EA; --alerte:#B42318; --alerte-pale:#FDE8E6;
+  --facile:#2F6FB0; --facile-pale:#EAF2FB; --dur:#B4441C; --dur-pale:#FCEDE6;
+  --d:"Archivo","Arial Narrow",Arial,sans-serif; --t:"Atkinson","Segoe UI",Roboto,Arial,sans-serif;
+  --sur-encre:#FFFFFF; --fait:#9AA3AE;
+  --c-p:#C2410C;--c-t:#7A2908; --sur-niv:#FFFFFF;}
+:root[data-theme="dark"]{
+  --sol:#11161D; --craie:#1B222C; --encre:#E9EEF3; --repere:#9AA5B3; --trait:#323C49; --sur-encre:#11161D; --fait:#5B6573;
+  --ligne:#F0A27E; --ligne-fonce:#F7C9B3; --ligne-pale:#3A2014;
+  --vert:#6FD39F; --vert-pale:#15301F; --alerte:#FF8A80; --alerte-pale:#3A1A18;
+  --facile:#7FB0E8; --facile-pale:#162638; --dur:#F29470; --dur-pale:#3A2018;
+  --c-p:#F0A27E;--c-t:#F7C9B3; --sur-niv:#11161D; color-scheme:dark}
+.schema{background:#EEF1F0;border-radius:14px;padding:8px;color:#172033}
+.c-gym{fill:#EEF1F0}
+.c-gymline{stroke:#C9D0D3;stroke-width:2;fill:none}
+.c-floor{fill:#FFFFFF}
+.c-line{stroke:#F2A900;stroke-width:5;fill:none}
+.c-att{stroke:#F2A900;stroke-width:3;fill:none}
+.c-net{stroke:#172033;stroke-width:6}
+.c-zone{fill:#F2A900;fill-opacity:.22;stroke:#8A5A00;stroke-width:1.5;stroke-dasharray:6 4}
+.c-zonet{fill:#8A5A00;font:700 max(13px,var(--fs-min,15px)) var(--t)}
+.c-target{fill:#F2A900;fill-opacity:.3;stroke:#8A5A00;stroke-width:1.5}
+.c-cone{fill:#E8590C}
+.c-pa{fill:#2F6FB0}
+.c-pb{fill:#C2410C}
+.c-pn{fill:#5A6475}
+.c-pt{fill:#fff;font:800 16px var(--d);text-anchor:middle;dominant-baseline:central}
+.c-ball{stroke:#172033;stroke-width:2.5;stroke-dasharray:8 5;fill:none}
+.defi{margin-top:12px;padding:10px 14px;border-radius:14px;background:var(--ligne-pale);font-size:17px}
+.defi b{color:var(--ligne-fonce)}
+/* Cross training : bascule niveau / démarche, mouvements, formats */
+.ct-bas{display:inline-flex;gap:6px;flex-wrap:wrap}
+.ct-bas button{min-height:44px;padding:4px 12px;border-radius:999px;border:2px solid var(--ligne);background:var(--craie);color:var(--ligne-fonce);font:700 max(14px,var(--fs-min,15px)) var(--t);cursor:pointer}
+.ct-bas button.on{background:var(--ligne);color:#fff}
+.mv-grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.mv{margin:0;background:#fff;border:1px solid var(--trait);border-radius:12px;padding:6px;color:#172033}
+.mv-v{display:grid;place-items:center;min-height:92px}
+.mv-v img{max-width:100%;max-height:110px;object-fit:contain}
+.mv-v svg{width:100%;height:auto;max-height:110px}
+.mv figcaption{display:flex;flex-wrap:wrap;gap:4px;align-items:center;font-size:max(13px,var(--fs-min,15px));line-height:1.2;margin-top:4px}
+.mv figcaption b{flex:1 1 100%}
+.mv-t{font:700 max(11px,var(--fs-min,15px)) var(--t);padding:1px 6px;border-radius:6px;background:#eef1f4;color:#334155}
+.mv-t.z-INF{background:#cffafe;color:#155e75}.mv-t.z-SUP{background:#ede9fe;color:#5b21b6}.mv-t.z-TRONC{background:#fef3c7;color:#92400e}.mv-t.z-CARDIO{background:#ffe4e6;color:#9f1239}
+.mv-t.mat{background:#334155;color:#fff}
+svg.fmt,svg.org,svg.etoile{width:100%;height:auto;background:#fff;border-radius:12px;color:#172033}
+svg.etoile{max-width:300px;display:block;margin:auto}
+.etire{margin:0;padding-left:18px;font-size:max(14px,var(--fs-min,15px))}
+.cap{font-size:max(13px,var(--fs-min,15px));color:var(--repere);margin:6px 2px 0}
+.mat-jour{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--ligne-pale);color:var(--ligne-fonce);font-weight:700}
+@media (max-width:640px){.ct-bas{gap:3px;flex-wrap:nowrap}.ct-bas button{min-height:40px;padding:2px 8px;font-size:14px}.ct-bas .lg{display:none}}
+</style>
+<style>/* Lisibilité terrain : textes à 15 px minimum à l'écran ; tailles d'origine à l'impression. */@media print{:root{--fs-min:0px}}</style>
+<link rel="stylesheet" href="eps-charte-v1.css">
+<style>/* Charte v1 : couleur de l'activité et teinte de chaque cycle (calculées par construire.py) */
+:root{--act:#c2410c;--act-fonce:#782807;--act-pale:#f8e8e2;--act-sombre:#dd9679;--act-pale-sombre:#3c231d}
+:root{--c-p:#f3d9ce;--c-p-pale:#f8e8e2}
+body.niv-p{--niv:#f3d9ce;--sur-niv:#1c2128;--niv-pale:var(--act-pale)}
+:root[data-theme="dark"] body.niv-p{--niv:#632c18;--sur-niv:#e6edf3}
+.cy button[data-cy=p].on{background:#f3d9ce;color:#1c2128}
+:root[data-theme="dark"] .cy button[data-cy=p].on{background:#632c18;color:#e6edf3}
+.pc.niv-p .sc.jour{outline-color:var(--ligne)}
+.pc.niv-p{--nivp:#c2410c}
+:root{--c-g:#f3d9ce;--c-g-pale:#f8e8e2}
+body.niv-g{--niv:#f3d9ce;--sur-niv:#1c2128;--niv-pale:var(--act-pale)}
+:root[data-theme="dark"] body.niv-g{--niv:#632c18;--sur-niv:#e6edf3}
+.cy button[data-cy=g].on{background:#f3d9ce;color:#1c2128}
+:root[data-theme="dark"] .cy button[data-cy=g].on{background:#632c18;color:#e6edf3}
+.pc.niv-g .sc.jour{outline-color:var(--ligne)}
+.pc.niv-g{--nivp:#c2410c}
+:root{--c-t:#782807;--c-t-pale:#f8e8e2}
+body.niv-t{--niv:#782807;--sur-niv:#ffffff;--niv-pale:var(--act-pale)}
+:root[data-theme="dark"] body.niv-t{--niv:#e4aa92;--sur-niv:#0d1117}
+.cy button[data-cy=t].on{background:#782807;color:#ffffff}
+:root[data-theme="dark"] .cy button[data-cy=t].on{background:#e4aa92;color:#0d1117}
+.pc.niv-t .sc.jour{outline-color:var(--ligne)}
+.pc.niv-t{--nivp:#782807}
+:root{--c-h:#782807;--c-h-pale:#f8e8e2}
+body.niv-h{--niv:#782807;--sur-niv:#ffffff;--niv-pale:var(--act-pale)}
+:root[data-theme="dark"] body.niv-h{--niv:#e4aa92;--sur-niv:#0d1117}
+.cy button[data-cy=h].on{background:#782807;color:#ffffff}
+:root[data-theme="dark"] .cy button[data-cy=h].on{background:#e4aa92;color:#0d1117}
+.pc.niv-h .sc.jour{outline-color:var(--ligne)}
+.pc.niv-h{--nivp:#782807}
+</style>
+</head>
+<body>
+<header class="barre">
+  <img src="icon-192.png" alt="">
+  <div class="app">Cross Training<small>Lycée Pompidou</small></div>
+  <span class="pastille-niv" id="cyPast">1re</span>
+  <div class="titre" id="titre"></div>
+  <a class="bt clair" href="https://yannickdartois-hue.github.io/cross-training-pompidou/">Chrono élève</a>
+  <a class="bt clair" id="prep" href="outils.html">Préparer</a>
+  <button class="bt clair baide" type="button" onclick="EPSAide.ouvrir()" aria-label="Mode d’emploi" title="Mode d’emploi">?</button>
+</header>
+<div class="trace"></div>
+<div class="niveau" id="niveau"></div>
+<section class="deroule" id="deroule" aria-label="Déroulé de la séance"></section>
+<main class="zone" id="zone"></main>
+<footer class="pouce">
+  <button class="bt bord" id="btSeances" type="button">‹ Séances</button>
+  <button class="bt bord" id="btOutils" type="button">Outils</button>
+  <button class="bt bord" id="btAjuster" type="button">Ajuster le déroulé</button>
+  <div class="info" id="info"></div>
+</footer>
+<div id="couche"></div>
+
+<script src="cross-training-donnees.js"></script>
+<script>
+'use strict';
+/* Écran de cours — cross training : ce qui est propre à l'activité.
+   Source : mon-eps/atelier/ecran-de-cours/apps/. Le moteur commun est ecran.js. */
+/* 4 parcours de 9 séances : Première et Terminale, en démarche progressive ou GAREEPS.
+   La bascule en haut change de niveau ou de démarche ; chaque parcours garde sa séance du jour. */
+const courtCT=t=>String(t||'').split(/\s:\s|\s·\s/)[0];
+const convCT=f=>({t:f.titre,k:f.cat,disp:f.dispo,four:f.roles,deroul:f.deroul||[],cons:f.crit?[f.crit]:[],reus:f.reussite,moins:f.moins,plus:f.plus,spec:f.schema});
+const versEcran=L=>L.map(S=>({id:S.id.toLowerCase(),n:S.id,title:S.titre,short:courtCT(S.titre),obj:S.obj,mat:S.mat,prepare:S.prepare||[],install:S.install,
+  tl:S.tl.map(t=>[t[0],String(t[1]),t[2]]),ex:S.fiches.map(convCT),evalPage:false,status:S.status==='eval'?'eval':''}));
+const NIV_CT={p:['Première','1re','PREMIÈRE'],g:['Première','1re','PREMIÈRE'],t:['Terminale','Tle','TERMINALE'],h:['Terminale','Tle','TERMINALE']};
+const DEM_CT={p:'progressive',t:'progressive',g:'GAREEPS',h:'GAREEPS'};
+const APP={
+  old:'outils.html',
+  cle:'ct',
+  niv:Object.fromEntries(Object.keys(PARCOURS).map(k=>[k,{label:NIV_CT[k][0]+' · '+DEM_CT[k],court:NIV_CT[k][1],long:NIV_CT[k][2]+' · '+DEM_CT[k].toUpperCase(),L:versEcran(PARCOURS[k].L)}])),
+  defaut:'p',
+  lienOld:(c,id)=>'outils.html#seance-'+c+'-'+String(id||'s1').toUpperCase(),
+  lireCur(){const o={};for(const k of Object.keys(PARCOURS)){const j=lire('ct_jour_'+k,-1),L=APP.niv[k].L;o[k]=j>=0&&L[j]?L[j].id:''}return o},
+  marquerJour(c,id){const j=APP.niv[c].L.findIndex(s=>s.id===id);if(j<0)return;ecrire('ct_jour_'+c,j);CUR[c]=id},
+  outils:[{"titre":"Pendant le cours","items":[["mouvements","Mouvements","photos, critères, − et +"],["formats","Formats","Tabata, EMOM, AMRAP…"],["chrono","Chrono élève","l’appli des élèves"],["echauff","Échauffements","guidé et autonome"]]},
+          {"titre":"Adapter","items":[["mobiles","Mobiles et FC","les 2 mobiles de l’épreuve"],["banque","Banque","situations de rechange"],["diff","Différenciation","douleurs, débutants, experts"],["gareeps","GAREEPS","étoile, SCE, SRP, STOM"]]},
+          {"titre":"Évaluer","items":[["eval","Épreuve","référentiel, jour J, barèmes"],["carnet","Carnet","à imprimer"],["sources","Sources","pour préparer"]]}],
+  urlOutil:id=>id==='chrono'?LIEN_CHRONO:APP.old+'#tab-'+id,
+  racc:[[/TABATA|Tabata|EMOM|AMRAP|for time/,'formats','Les formats'],[/mobile|FC visée|fourchette/i,'mobiles','Mobiles et FC'],[/étoile|SCE|SRP|STOM/,'gareeps','Démarche GAREEPS'],[/^ech$/,'echauff','Échauffements'],[/kettlebell|barre|box|swing|thruster/i,'mouvements','Mouvements']],
+  schemaDe:e=>{if(!e||!e.spec)return '';return schema(e.spec)},
+  plan(c,id){
+    const s=sea(c,id);if(!s)return [];
+    let fi=0;
+    return s.tl.map(t=>{const typ=t[2],dur=+t[1];
+      if(typ==='inst')return {k:'info',typ,label:t[0],court:'Install.',dur};
+      const e=s.ex[fi];
+      return {k:'ex',typ,ref:{c,id,i:fi++},label:typ==='ex'||typ==='sf'?(e?courtCT(e.t):t[0]):t[0],court:t[0],dur}})
+     .map(x=>(x.orig=x.dur,x.st='todo',x));
+  },
+  blocInfo(b,s,i){return `${s.install?`<h2 class="rub">Installation</h2>${orgHTML(s.install)}`:''}<h2 class="rub">Objectif de la séance</h2><p class="texte">${esc(s.obj)}</p>${s.mat?`<p class="texte">Matériel : <span class="mat-jour">${esc(s.mat)}</span></p>`:''}${s.prepare.length?`<h2 class="rub">Ce que la séance prépare pour l’évaluation</h2><ul class="org">${s.prepare.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}`},
+  /* bascule : niveau (1re / Tle) et démarche (progressive / GAREEPS) */
+  bascule(){const c=J.c,niv=(c==='p'||c==='g')?'1':'T',dem=(c==='g'||c==='h')?'G':'P';
+    const vers=(n,d)=>({'1P':'p','1G':'g','TP':'t','TG':'h'})[n+d];
+    const b=(k,lab,on)=>`<button type="button" data-ctc="${k}" class="${on?'on':''}" aria-pressed="${on}">${lab}</button>`;
+    return `<span class="ct-bas">${b(vers('1',dem),'1re',niv==='1')}${b(vers('T',dem),'Tle',niv==='T')}${b(vers(niv,'P'),'Prog<span class="lg">ressive</span>',dem==='P')}${b(vers(niv,'G'),'GAREEPS',dem==='G')}</span>`}
+};
+document.addEventListener('click',ev=>{const x=ev.target.closest('[data-ctc]');if(!x)return;const c=x.dataset.ctc;if(c===J.c)return;
+  const i=Math.max(0,CYC[J.c].L.findIndex(s=>s.id===J.id));const id=CUR[c]||(CYC[c].L[i]||CYC[c].L[0]).id;allerA(c,id)});
+</script>
+<script src="ecran.js"></script>
+<script src="aide-ecran.js"></script>
+<script src="eps-aide.js"></script>
+</body>
+</html>
