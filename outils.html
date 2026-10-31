@@ -204,6 +204,9 @@ svg.fmt{max-width:640px;display:block}</style>
 <div id="printzone"></div>
 <div class="timer noprint" id="timer" hidden><span id="tm-lab"></span><b id="tm-t">00:00</b><button class="btn mini ghost" id="tm-close" type="button">Arrêter</button></div>
 <script src="cross-training-donnees.js"></script>
+<script src="videos.js"></script>
+<script src="lecteur.js"></script>
+<style>@media print{.bt-video{display:none!important}}</style>
 <script>
 'use strict';
 const $ = s => document.querySelector(s);
@@ -253,7 +256,7 @@ function seanceHTML(k, i, forPrint){
 /* ---------- Mouvements ---------- */
 let filtre = LS.get("ct_filtre", {z:"", niv:"p"});
 function mvFiche(m){
-  return `<article class="pcard" style="--c:${ZONES[m.z].c}"><div class="kino">${mvVisuel(m)}</div>
+  return `<article class="pcard" style="--c:${ZONES[m.z].c}"><div class="kino" style="position:relative">${mvVisuel(m)}${typeof boutonVideo==="function"?boutonVideo(m.id,"sur-img"):""}</div>
   <h4><span>${esc(m.nom)}${m.aussi?`<small class="muted" style="display:block;font:400 14px var(--t,Arial)">appli : ${esc(m.aussi)}</small>`:""}</span><span class="pill">${m.z} · N${m.n}${m.m !== "pdc" ? " · " + MATERIEL[m.m].court : ""}${m.tle ? " · Tle" : ""}</span></h4>
   <dl><dt>Placement</dt><dd>${esc(m.c[0])}</dd><dt>Respiration</dt><dd>${esc(m.c[1])}</dd><dt>Amplitude</dt><dd>${esc(m.c[2])}</dd><dt>−</dt><dd>${esc(m.moins)}</dd><dt>+</dt><dd>${esc(m.plus)}</dd></dl>
   <p class="secu"><b>Erreur fréquente :</b> ${esc(m.err)}</p></article>`;
