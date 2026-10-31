@@ -257,7 +257,7 @@ function seanceHTML(k, i, forPrint){
 let filtre = LS.get("ct_filtre", {z:"", niv:"p"});
 function mvFiche(m){
   return `<article class="pcard" style="--c:${ZONES[m.z].c}"><div class="kino" style="position:relative">${mvVisuel(m)}${typeof boutonVideo==="function"?boutonVideo(m.id,"sur-img"):""}</div>
-  <h4><span>${esc(m.nom)}${m.aussi?`<small class="muted" style="display:block;font:400 14px var(--t,Arial)">appli : ${esc(m.aussi)}</small>`:""}</span><span class="pill">${m.z} · N${m.n}${m.m !== "pdc" ? " · " + MATERIEL[m.m].court : ""}${m.tle ? " · Tle" : ""}</span></h4>
+  <h4><span>${esc(m.nom)}${m.aussi?`<small class="muted" style="display:block;font:400 14px var(--t,Arial)">ancienne appli : ${esc(m.aussi)}</small>`:""}</span><span class="pill">${m.z} · N${m.n}${m.m !== "pdc" ? " · " + MATERIEL[m.m].court : ""}${m.tle ? " · Tle" : ""}</span></h4>
   <dl><dt>Placement</dt><dd>${esc(m.c[0])}</dd><dt>Respiration</dt><dd>${esc(m.c[1])}</dd><dt>Amplitude</dt><dd>${esc(m.c[2])}</dd><dt>−</dt><dd>${esc(m.moins)}</dd><dt>+</dt><dd>${esc(m.plus)}</dd></dl>
   <p class="secu"><b>Erreur fréquente :</b> ${esc(m.err)}</p></article>`;
 }
@@ -295,12 +295,12 @@ VIEWS.mouvements = () => `<h2>Les mouvements</h2><p>${MOUV.length} mouvements, c
   <p class="note small">${esc(CHARGES.p)}<br>${esc(CHARGES.t)}</p>${mouvementsHTML()}`;
 VIEWS.formats = () => `<h2>Les formats de travail</h2><p>L’épreuve du lycée ne contient que le <b>TABATA</b> et l’<b>EMOM</b>. AMRAP, for time et EMOM+1 font partie de la culture de l’activité : utiles pour se tester et comprendre l’effort, mais pas notés.</p>
   ${FORMATS.map(f => `<div class="card"><h3>${esc(f.nom)} ${f.ep ? `<span class="pill st-faite">dans l’épreuve</span>` : `<span class="pill">hors épreuve</span>`}</h3><div class="sch">${schema(f.spec)}</div><p>${esc(f.def)}</p><p><b>Règle.</b> ${esc(f.regle)}</p>${f.vertical ? `<p>${esc(f.vertical)}<br>${esc(f.horizontal)}</p>` : ""}${f.lire ? `<p class="ok">${esc(f.lire)}</p>` : ""}<p class="secu"><b>Piège :</b> ${esc(f.piege)}</p><div style="clear:both"></div></div>`).join("")}
-  <p class="note">Chrono des élèves : <a href="${LIEN_CHRONO}">l’appli Cross Training Pompidou</a> (Tabata, EMOM, EMOM+1, AMRAP, for time ; bilan par QR code).</p>`;
+  <p class="note">Chrono des élèves : <a href="${LIEN_ELEVE}">l’appli élève Cross training</a> (Tabata, EMOM, EMOM+1, AMRAP, for time à paliers ; carnet de séance et bilan par QR code).</p>`;
 const tabMob = M => `<table class="tab scroll"><tr><th>Niveau</th><th>Effort / repos</th><th>Organisation</th><th>Exercices</th><th>Remarque</th></tr>${M.tabata.map(r => `<tr><th>${r[0]}</th><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td class="${r[4] ? "secu" : ""}">${esc(r[4])}</td></tr>`).join("")}</table>`;
 VIEWS.mobiles = () => `<h2>Les deux mobiles de l’épreuve</h2>${schema("wod")}
   <div class="lvgrid">${["mod","elev"].map(k => { const M = MOBILES[k]; return `<div class="lv" style="--c:${M.c}"><h3>${M.nom}</h3><p class="small"><b>${esc(M.sous)}</b> · FC visée <b>${M.fc}</b></p><p>${esc(M.wod)}</p><p>${esc(M.exos)}</p><p class="small muted">${esc(M.effets)}</p></div>`; }).join("")}</div>
   <h3>TABATA : les 3 niveaux, intensité modérée</h3>${tabMob(MOBILES.mod)}<h3>TABATA : les 3 niveaux, intensité élevée</h3>${tabMob(MOBILES.elev)}<p class="note">${esc(MOBILES.emom)}</p>
-  <h3>Correspondance avec l’appli chrono des élèves</h3><table class="tab"><tr><th>Filière de l’appli</th><th>Mobile de l’épreuve</th><th>Ce qu’il faut savoir</th></tr>${FILIERES_APPLI.map(r => `<tr><td>${esc(r[0])}</td><td><b>${esc(r[1])}</b></td><td>${esc(r[2])}</td></tr>`).join("")}</table>
+  <h3>Correspondance avec les 3 filières de l’ancienne appli chrono</h3><table class="tab"><tr><th>Filière</th><th>Mobile de l’épreuve</th><th>Ce qu’il faut savoir</th></tr>${FILIERES_APPLI.map(r => `<tr><td>${esc(r[0])}</td><td><b>${esc(r[1])}</b></td><td>${esc(r[2])}</td></tr>`).join("")}</table>
   <h3>Fréquence cardiaque</h3><ul>${["prise","repos","max","karvonen","epreuve"].map(k => `<li>${esc(FC[k])}</li>`).join("")}</ul>
   <h3>Échelle de ressenti</h3><table class="tab"><tr><th></th><th>Ressenti</th><th>Repère</th></tr>${RESSENTIS.map(r => `<tr><th>${r[0]}</th><td>${r[1]}</td><td>${esc(r[2])}</td></tr>`).join("")}</table>`;
 function echHTML(){ const G = ECHAUFF.guide, A = ECHAUFF.autonome;

@@ -9,7 +9,7 @@ Cycle de cross training CA5 (savoir s’entraîner) du lycée Georges Pompidou :
 - `pdf/` : séances, cycles complets, planche des mouvements, carnet, épreuve, banque, échauffements (régénérés à chaque modification).
 
 Matériel : Première = poids de corps, banc, box, kettlebell ou haltère léger ; Terminale = + barre.
-Mobiles : les 2 du référentiel (modéré 140-160, élevé 160-180). Les 3 filières de l’appli chrono élève y sont rattachées (onglet « Mobiles et FC »).
+Mobiles : les 2 du référentiel (modéré 140-160, élevé 160-180). Les 3 filières de l’ancienne appli chrono y sont rattachées (le chrono est désormais dans l’appli élève) (onglet « Mobiles et FC »).
 
 ## Vidéos de démonstration
 
