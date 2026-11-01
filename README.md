@@ -13,7 +13,7 @@ Mobiles : les 2 du référentiel (modéré 140-160, élevé 160-180). Les 3 fili
 
 ## Vidéos de démonstration
 
-`videos.js` associe à 76 des 81 mouvements une vidéo YouTube courte (souvent moins d'une minute), surtout en français : 15-Minute Challenge, EPS Nancy-Metz, MUST COACH, WODMOOV, CrossFit… Le bouton ▶ sur l'image ouvre la vidéo en `youtube-nocookie`. Il faut internet pour la lire ; sans connexion, un message renvoie à la fiche. Les vidéos marquées `a:1` sont seulement proches du mouvement de la fiche, et c'est la fiche qui fait foi. Sans vidéo : arlaud, course, sauts-groupes-banc, accroupi-genoux, gainage-mains-cuisses. Pour changer une vidéo, il suffit de remplacer son identifiant `y` dans `videos.js`. La source est `ct/src/videos.py`.
+`videos.js` associe à 77 des 81 mouvements une vidéo YouTube courte (souvent moins d'une minute), surtout en français : 15-Minute Challenge, EPS Nancy-Metz, MUST COACH, WODMOOV, CrossFit… Le bouton ▶ sur l'image ouvre la vidéo en `youtube-nocookie`. Il faut internet pour la lire ; sans connexion, un message renvoie à la fiche. Les vidéos marquées `a:1` sont seulement proches du mouvement de la fiche, et c'est la fiche qui fait foi. Sans vidéo : arlaud, course, sauts-groupes-banc, gainage-mains-cuisses. Pour changer une vidéo, il suffit de remplacer son identifiant `y` dans `videos.js`. La source est `ct/src/videos.py`.
 
 ## Origine
 
